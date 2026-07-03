@@ -1,0 +1,18 @@
+# Secrets
+.env
+
+# Generated run artifacts (cassettes are intentionally NOT ignored)
+runs/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# OS / editor
+.DS_Store

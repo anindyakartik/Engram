@@ -1,0 +1,9 @@
+google-genai==2.10.0
+python-dotenv==1.2.2
+numpy==2.5.1
+matplotlib==3.11.0
+streamlit==1.59.1
+altair==6.2.2
+pandas==3.0.3
+pytest==9.1.1
+ruff==0.15.20
