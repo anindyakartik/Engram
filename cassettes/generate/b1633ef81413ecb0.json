@@ -1,0 +1,43 @@
+{
+  "_key": {
+    "contents": "Schema:\nCREATE TABLE customers (\n    id         INTEGER PRIMARY KEY,\n    name       TEXT NOT NULL,\n    country    TEXT NOT NULL,\n    signup_ts  INTEGER NOT NULL\n);\n\nCREATE TABLE products (\n    id             INTEGER PRIMARY KEY,\n    name           TEXT NOT NULL,\n    list_price_usd INTEGER NOT NULL\n);\n\nCREATE TABLE categories (\n    id   INTEGER PRIMARY KEY,\n    name TEXT NOT NULL\n);\n\nCREATE TABLE product_categories (\n    product_id  INTEGER NOT NULL,\n    category_id INTEGER NOT NULL\n);\n\nCREATE TABLE orders (\n    id          INTEGER PRIMARY KEY,\n    customer_id INTEGER NOT NULL,\n    status      INTEGER NOT NULL,\n    price_usd   INTEGER NOT NULL,\n    placed_ts   INTEGER NOT NULL,\n    is_deleted  INTEGER NOT NULL\n);\n\nCREATE TABLE order_items (\n    order_id   INTEGER NOT NULL,\n    product_id INTEGER NOT NULL,\n    qty        INTEGER NOT NULL\n);\n\n\nYou have learned the following real, non-obvious conventions about THIS database from past attempts. They override your default assumptions \u2014 apply any that are relevant:\n- The 'orders' table contains a 'is_deleted' column that must be filtered (e.g., 'is_deleted = 0') to retrieve valid, non-deleted orders.\n- The 'status' column in the 'orders' table uses a non-standard integer mapping where 'shipped' is not represented by the value 1.\n\nQuestion: How many delivered orders were placed in 2024?",
+    "force_tool": true,
+    "kind": "generate",
+    "model": "gemini-flash-lite-latest",
+    "seed": 7,
+    "system": "You are a careful data analyst working with a SQLite database. You are given ONLY the schema (no sample data, no documentation). Write exactly ONE SQLite SELECT query that answers the question and submit it by calling submit_sql. Do not explain your answer.",
+    "temperature": 0.0,
+    "tools": [
+      {
+        "description": "Submit the final SQL SELECT query that answers the question.",
+        "name": "submit_sql",
+        "parameters": {
+          "properties": {
+            "query": {
+              "description": "A single SQLite SELECT statement.",
+              "type": "string"
+            }
+          },
+          "required": [
+            "query"
+          ],
+          "type": "object"
+        }
+      }
+    ]
+  },
+  "text": "",
+  "tool_calls": [
+    {
+      "args": {
+        "query": "SELECT count(*) FROM orders WHERE status = 'delivered' AND is_deleted = 0 AND placed_ts >= 1704067200 AND placed_ts < 1735689600;"
+      },
+      "name": "submit_sql"
+    }
+  ],
+  "usage": {
+    "input": 454,
+    "output": 66,
+    "total": 520
+  }
+}

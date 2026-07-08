@@ -1,0 +1,1016 @@
+{
+  "headline": {
+    "baseline_pct": 40.9,
+    "engram_pct": 81.8,
+    "engram_ci": [
+      0.0,
+      100.0
+    ],
+    "improvement_pts": 40.9,
+    "naive_pct": 84.1,
+    "engram_minus_naive_pts": -2.3,
+    "raw_lessons_seen": 8.0,
+    "curated_memory_size": 6.0,
+    "naive_memory_size": 7.5,
+    "ordering_holds": false
+  },
+  "aggregate": {
+    "no_memory": {
+      "steps": [
+        0,
+        6,
+        12,
+        18,
+        24,
+        30
+      ],
+      "mean": [
+        0.4090909090909091,
+        0.4090909090909091,
+        0.4090909090909091,
+        0.4090909090909091,
+        0.4090909090909091,
+        0.4090909090909091
+      ],
+      "ci_lo": [
+        0.4090909090909091,
+        0.4090909090909091,
+        0.4090909090909091,
+        0.4090909090909091,
+        0.4090909090909091,
+        0.4090909090909091
+      ],
+      "ci_hi": [
+        0.4090909090909091,
+        0.4090909090909091,
+        0.4090909090909091,
+        0.4090909090909091,
+        0.4090909090909091,
+        0.4090909090909091
+      ],
+      "memory_size": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "raw_lessons_seen": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "n_seeds": 2
+    },
+    "naive": {
+      "steps": [
+        0,
+        6,
+        12,
+        18,
+        24,
+        30
+      ],
+      "mean": [
+        0.4090909090909091,
+        0.5909090909090909,
+        0.8181818181818181,
+        0.8181818181818181,
+        0.8181818181818181,
+        0.8409090909090908
+      ],
+      "ci_lo": [
+        0.4090909090909091,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "ci_hi": [
+        0.4090909090909091,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "memory_size": [
+        0.0,
+        1.5,
+        4.0,
+        5.5,
+        6.5,
+        7.5
+      ],
+      "raw_lessons_seen": [
+        0.0,
+        1.5,
+        4.0,
+        5.5,
+        6.5,
+        7.5
+      ],
+      "n_seeds": 2
+    },
+    "engram": {
+      "steps": [
+        0,
+        6,
+        12,
+        18,
+        24,
+        30
+      ],
+      "mean": [
+        0.4090909090909091,
+        0.5909090909090909,
+        0.8181818181818181,
+        0.8181818181818181,
+        0.8181818181818181,
+        0.8181818181818181
+      ],
+      "ci_lo": [
+        0.4090909090909091,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "ci_hi": [
+        0.4090909090909091,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "memory_size": [
+        0.0,
+        1.5,
+        4.0,
+        5.0,
+        5.5,
+        6.0
+      ],
+      "raw_lessons_seen": [
+        0.0,
+        1.5,
+        4.0,
+        5.5,
+        6.5,
+        8.0
+      ],
+      "n_seeds": 2
+    }
+  },
+  "runs": [
+    {
+      "condition": "no_memory",
+      "seed": 1,
+      "checkpoints": [
+        {
+          "step": 0,
+          "success_rate": 0.4090909090909091,
+          "n_eval": 22,
+          "memory_size": 0,
+          "raw_lessons_seen": 0
+        },
+        {
+          "step": 6,
+          "success_rate": 0.4090909090909091,
+          "n_eval": 22,
+          "memory_size": 0,
+          "raw_lessons_seen": 0
+        },
+        {
+          "step": 12,
+          "success_rate": 0.4090909090909091,
+          "n_eval": 22,
+          "memory_size": 0,
+          "raw_lessons_seen": 0
+        },
+        {
+          "step": 18,
+          "success_rate": 0.4090909090909091,
+          "n_eval": 22,
+          "memory_size": 0,
+          "raw_lessons_seen": 0
+        },
+        {
+          "step": 24,
+          "success_rate": 0.4090909090909091,
+          "n_eval": 22,
+          "memory_size": 0,
+          "raw_lessons_seen": 0
+        },
+        {
+          "step": 30,
+          "success_rate": 0.4090909090909091,
+          "n_eval": 22,
+          "memory_size": 0,
+          "raw_lessons_seen": 0
+        }
+      ],
+      "final_snapshot": {
+        "step": 30,
+        "count": 0,
+        "by_scope": {},
+        "by_source": {},
+        "lessons": []
+      },
+      "stats": {
+        "generate_calls": 162,
+        "embed_calls": 0,
+        "live_calls": 0,
+        "tokens_in": 55891,
+        "tokens_out": 6854,
+        "tokens_embed": 0,
+        "cost_usd": 0.008331
+      }
+    },
+    {
+      "condition": "no_memory",
+      "seed": 2,
+      "checkpoints": [
+        {
+          "step": 0,
+          "success_rate": 0.4090909090909091,
+          "n_eval": 22,
+          "memory_size": 0,
+          "raw_lessons_seen": 0
+        },
+        {
+          "step": 6,
+          "success_rate": 0.4090909090909091,
+          "n_eval": 22,
+          "memory_size": 0,
+          "raw_lessons_seen": 0
+        },
+        {
+          "step": 12,
+          "success_rate": 0.4090909090909091,
+          "n_eval": 22,
+          "memory_size": 0,
+          "raw_lessons_seen": 0
+        },
+        {
+          "step": 18,
+          "success_rate": 0.4090909090909091,
+          "n_eval": 22,
+          "memory_size": 0,
+          "raw_lessons_seen": 0
+        },
+        {
+          "step": 24,
+          "success_rate": 0.4090909090909091,
+          "n_eval": 22,
+          "memory_size": 0,
+          "raw_lessons_seen": 0
+        },
+        {
+          "step": 30,
+          "success_rate": 0.4090909090909091,
+          "n_eval": 22,
+          "memory_size": 0,
+          "raw_lessons_seen": 0
+        }
+      ],
+      "final_snapshot": {
+        "step": 30,
+        "count": 0,
+        "by_scope": {},
+        "by_source": {},
+        "lessons": []
+      },
+      "stats": {
+        "generate_calls": 324,
+        "embed_calls": 0,
+        "live_calls": 0,
+        "tokens_in": 111822,
+        "tokens_out": 13797,
+        "tokens_embed": 0,
+        "cost_usd": 0.016701
+      }
+    },
+    {
+      "condition": "naive",
+      "seed": 1,
+      "checkpoints": [
+        {
+          "step": 0,
+          "success_rate": 0.4090909090909091,
+          "n_eval": 22,
+          "memory_size": 0,
+          "raw_lessons_seen": 0
+        },
+        {
+          "step": 6,
+          "success_rate": 0.7727272727272727,
+          "n_eval": 22,
+          "memory_size": 2,
+          "raw_lessons_seen": 2
+        },
+        {
+          "step": 12,
+          "success_rate": 0.9090909090909091,
+          "n_eval": 22,
+          "memory_size": 3,
+          "raw_lessons_seen": 3
+        },
+        {
+          "step": 18,
+          "success_rate": 0.9090909090909091,
+          "n_eval": 22,
+          "memory_size": 5,
+          "raw_lessons_seen": 5
+        },
+        {
+          "step": 24,
+          "success_rate": 0.9090909090909091,
+          "n_eval": 22,
+          "memory_size": 6,
+          "raw_lessons_seen": 6
+        },
+        {
+          "step": 30,
+          "success_rate": 0.9090909090909091,
+          "n_eval": 22,
+          "memory_size": 6,
+          "raw_lessons_seen": 6
+        }
+      ],
+      "final_snapshot": {
+        "step": 30,
+        "count": 6,
+        "by_scope": {
+          "global": 3,
+          "task_type": 3
+        },
+        "by_source": {
+          "reflection": 6
+        },
+        "lessons": [
+          {
+            "id": "L0001",
+            "content": "The 'orders' table contains an 'is_deleted' column, which must be filtered (e.g., 'is_deleted = 0') to exclude inactive or cancelled orders from aggregate counts.",
+            "scope": "global",
+            "scope_key": "",
+            "retrieved_count": 25,
+            "helped_count": 20,
+            "hurt_count": 5,
+            "provenance": [
+              "train:category_count:Books"
+            ],
+            "created_step": 2,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.5769
+          },
+          {
+            "id": "L0002",
+            "content": "The 'list_price_usd' column in the 'products' table stores prices in cents, not dollars, requiring division by 100 for currency comparisons.",
+            "scope": "global",
+            "scope_key": "",
+            "retrieved_count": 10,
+            "helped_count": 8,
+            "hurt_count": 2,
+            "provenance": [
+              "train:expensive:150"
+            ],
+            "created_step": 4,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.5455
+          },
+          {
+            "id": "L0003",
+            "content": "The 'status' column in the 'orders' table uses integer codes rather than string literals (e.g., 'shipped'), requiring a numeric filter instead of a string comparison.",
+            "scope": "global",
+            "scope_key": "",
+            "retrieved_count": 12,
+            "helped_count": 9,
+            "hurt_count": 3,
+            "provenance": [
+              "train:status_revenue:shipped"
+            ],
+            "created_step": 10,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.4615
+          },
+          {
+            "id": "L0004",
+            "content": "The 'status' column in the 'orders' table uses a non-standard integer mapping where 'shipped' is not represented by the value 1.",
+            "scope": "task_type",
+            "scope_key": "status_revenue",
+            "retrieved_count": 0,
+            "helped_count": 0,
+            "hurt_count": 0,
+            "provenance": [
+              "train:status_revenue:shipped"
+            ],
+            "created_step": 15,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.0
+          },
+          {
+            "id": "L0005",
+            "content": "The 'status' column in the 'orders' table uses a non-standard integer mapping where 'shipped' is not represented by the value 1.",
+            "scope": "task_type",
+            "scope_key": "compound",
+            "retrieved_count": 1,
+            "helped_count": 1,
+            "hurt_count": 0,
+            "provenance": [
+              "train:combo:shipped:2023"
+            ],
+            "created_step": 17,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.5
+          },
+          {
+            "id": "L0006",
+            "content": "The 'status' column in the 'orders' table uses a non-standard mapping where 'shipped' is not represented by the integer 1.",
+            "scope": "task_type",
+            "scope_key": "status_count",
+            "retrieved_count": 0,
+            "helped_count": 0,
+            "hurt_count": 0,
+            "provenance": [
+              "train:status_count:shipped"
+            ],
+            "created_step": 24,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.0
+          }
+        ]
+      },
+      "stats": {
+        "generate_calls": 492,
+        "embed_calls": 144,
+        "live_calls": 0,
+        "tokens_in": 187890,
+        "tokens_out": 21911,
+        "tokens_embed": 0,
+        "cost_usd": 0.027553
+      }
+    },
+    {
+      "condition": "naive",
+      "seed": 2,
+      "checkpoints": [
+        {
+          "step": 0,
+          "success_rate": 0.4090909090909091,
+          "n_eval": 22,
+          "memory_size": 0,
+          "raw_lessons_seen": 0
+        },
+        {
+          "step": 6,
+          "success_rate": 0.4090909090909091,
+          "n_eval": 22,
+          "memory_size": 1,
+          "raw_lessons_seen": 1
+        },
+        {
+          "step": 12,
+          "success_rate": 0.7272727272727273,
+          "n_eval": 22,
+          "memory_size": 5,
+          "raw_lessons_seen": 5
+        },
+        {
+          "step": 18,
+          "success_rate": 0.7272727272727273,
+          "n_eval": 22,
+          "memory_size": 6,
+          "raw_lessons_seen": 6
+        },
+        {
+          "step": 24,
+          "success_rate": 0.7272727272727273,
+          "n_eval": 22,
+          "memory_size": 7,
+          "raw_lessons_seen": 7
+        },
+        {
+          "step": 30,
+          "success_rate": 0.7727272727272727,
+          "n_eval": 22,
+          "memory_size": 9,
+          "raw_lessons_seen": 9
+        }
+      ],
+      "final_snapshot": {
+        "step": 30,
+        "count": 9,
+        "by_scope": {
+          "task_type": 7,
+          "global": 2
+        },
+        "by_source": {
+          "reflection": 9
+        },
+        "lessons": [
+          {
+            "id": "L0001",
+            "content": "The 'status' column in the 'orders' table uses a non-zero integer to represent 'pending' status, rather than 0.",
+            "scope": "task_type",
+            "scope_key": "status_revenue",
+            "retrieved_count": 3,
+            "helped_count": 1,
+            "hurt_count": 2,
+            "provenance": [
+              "train:status_revenue:pending"
+            ],
+            "created_step": 4,
+            "version": 1,
+            "source": "reflection",
+            "utility": -0.25
+          },
+          {
+            "id": "L0002",
+            "content": "The 'status' column in the 'orders' table uses non-zero integer values to represent 'pending' states, rather than 0.",
+            "scope": "task_type",
+            "scope_key": "status_count",
+            "retrieved_count": 1,
+            "helped_count": 0,
+            "hurt_count": 1,
+            "provenance": [
+              "train:status_count:pending"
+            ],
+            "created_step": 7,
+            "version": 1,
+            "source": "reflection",
+            "utility": -0.5
+          },
+          {
+            "id": "L0003",
+            "content": "The 'list_price_usd' column in the 'products' table stores prices in cents, not dollars, requiring division by 100 for currency comparisons.",
+            "scope": "global",
+            "scope_key": "",
+            "retrieved_count": 14,
+            "helped_count": 11,
+            "hurt_count": 3,
+            "provenance": [
+              "train:expensive:150"
+            ],
+            "created_step": 8,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.5333
+          },
+          {
+            "id": "L0004",
+            "content": "The 'orders' table contains a 'is_deleted' column that must be filtered (e.g., 'is_deleted = 0') to retrieve valid, non-deleted orders.",
+            "scope": "global",
+            "scope_key": "",
+            "retrieved_count": 17,
+            "helped_count": 12,
+            "hurt_count": 5,
+            "provenance": [
+              "train:combo:shipped:2023"
+            ],
+            "created_step": 9,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.3889
+          },
+          {
+            "id": "L0005",
+            "content": "The 'status' column in the 'orders' table uses a non-standard integer mapping where 'shipped' is not represented by the value 1.",
+            "scope": "task_type",
+            "scope_key": "compound",
+            "retrieved_count": 1,
+            "helped_count": 1,
+            "hurt_count": 0,
+            "provenance": [
+              "train:combo:shipped:2023"
+            ],
+            "created_step": 11,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.5
+          },
+          {
+            "id": "L0006",
+            "content": "The 'status' column in the 'orders' table uses a non-zero integer to represent 'shipped' status, rather than 0.",
+            "scope": "task_type",
+            "scope_key": "status_revenue",
+            "retrieved_count": 2,
+            "helped_count": 0,
+            "hurt_count": 2,
+            "provenance": [
+              "train:status_revenue:shipped"
+            ],
+            "created_step": 18,
+            "version": 1,
+            "source": "reflection",
+            "utility": -0.6667
+          },
+          {
+            "id": "L0007",
+            "content": "The 'status' column in the 'orders' table uses a specific integer mapping where 'pending' is represented by a value of 0, rather than being excluded by a '!= 0' filter.",
+            "scope": "task_type",
+            "scope_key": "status_revenue",
+            "retrieved_count": 2,
+            "helped_count": 1,
+            "hurt_count": 1,
+            "provenance": [
+              "train:status_revenue:pending"
+            ],
+            "created_step": 20,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.0
+          },
+          {
+            "id": "L0008",
+            "content": "The 'status' column in the 'orders' table uses non-zero integer values to represent specific states (e.g., 'shipped'), rather than 0.",
+            "scope": "task_type",
+            "scope_key": "status_count",
+            "retrieved_count": 0,
+            "helped_count": 0,
+            "hurt_count": 0,
+            "provenance": [
+              "train:status_count:shipped"
+            ],
+            "created_step": 29,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.0
+          },
+          {
+            "id": "L0009",
+            "content": "The 'status' column in the 'orders' table uses specific integer codes to represent order states, and 'shipped' is not represented by '!= 0'.",
+            "scope": "task_type",
+            "scope_key": "status_revenue",
+            "retrieved_count": 0,
+            "helped_count": 0,
+            "hurt_count": 0,
+            "provenance": [
+              "train:status_revenue:shipped"
+            ],
+            "created_step": 30,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.0
+          }
+        ]
+      },
+      "stats": {
+        "generate_calls": 663,
+        "embed_calls": 265,
+        "live_calls": 0,
+        "tokens_in": 260906,
+        "tokens_out": 30226,
+        "tokens_embed": 0,
+        "cost_usd": 0.038181
+      }
+    },
+    {
+      "condition": "engram",
+      "seed": 1,
+      "checkpoints": [
+        {
+          "step": 0,
+          "success_rate": 0.4090909090909091,
+          "n_eval": 22,
+          "memory_size": 0,
+          "raw_lessons_seen": 0
+        },
+        {
+          "step": 6,
+          "success_rate": 0.7727272727272727,
+          "n_eval": 22,
+          "memory_size": 2,
+          "raw_lessons_seen": 2
+        },
+        {
+          "step": 12,
+          "success_rate": 0.9090909090909091,
+          "n_eval": 22,
+          "memory_size": 3,
+          "raw_lessons_seen": 3
+        },
+        {
+          "step": 18,
+          "success_rate": 0.9090909090909091,
+          "n_eval": 22,
+          "memory_size": 5,
+          "raw_lessons_seen": 5
+        },
+        {
+          "step": 24,
+          "success_rate": 0.9090909090909091,
+          "n_eval": 22,
+          "memory_size": 6,
+          "raw_lessons_seen": 6
+        },
+        {
+          "step": 30,
+          "success_rate": 0.9090909090909091,
+          "n_eval": 22,
+          "memory_size": 6,
+          "raw_lessons_seen": 6
+        }
+      ],
+      "final_snapshot": {
+        "step": 30,
+        "count": 6,
+        "by_scope": {
+          "global": 3,
+          "task_type": 3
+        },
+        "by_source": {
+          "reflection": 6
+        },
+        "lessons": [
+          {
+            "id": "L0001",
+            "content": "The 'orders' table contains an 'is_deleted' column, which must be filtered (e.g., 'is_deleted = 0') to exclude inactive or cancelled orders from aggregate counts.",
+            "scope": "global",
+            "scope_key": "",
+            "retrieved_count": 25,
+            "helped_count": 20,
+            "hurt_count": 5,
+            "provenance": [
+              "train:category_count:Books"
+            ],
+            "created_step": 2,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.5769
+          },
+          {
+            "id": "L0002",
+            "content": "The 'list_price_usd' column in the 'products' table stores prices in cents, not dollars, requiring division by 100 for currency comparisons.",
+            "scope": "global",
+            "scope_key": "",
+            "retrieved_count": 10,
+            "helped_count": 8,
+            "hurt_count": 2,
+            "provenance": [
+              "train:expensive:150"
+            ],
+            "created_step": 4,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.5455
+          },
+          {
+            "id": "L0003",
+            "content": "The 'status' column in the 'orders' table uses integer codes rather than string literals (e.g., 'shipped'), requiring a numeric filter instead of a string comparison.",
+            "scope": "global",
+            "scope_key": "",
+            "retrieved_count": 12,
+            "helped_count": 9,
+            "hurt_count": 3,
+            "provenance": [
+              "train:status_revenue:shipped"
+            ],
+            "created_step": 10,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.4615
+          },
+          {
+            "id": "L0004",
+            "content": "The 'status' column in the 'orders' table uses a non-standard integer mapping where 'shipped' is not represented by the value 1.",
+            "scope": "task_type",
+            "scope_key": "status_revenue",
+            "retrieved_count": 0,
+            "helped_count": 0,
+            "hurt_count": 0,
+            "provenance": [
+              "train:status_revenue:shipped"
+            ],
+            "created_step": 15,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.0
+          },
+          {
+            "id": "L0005",
+            "content": "The 'status' column in the 'orders' table uses a non-standard integer mapping where 'shipped' is not represented by the value 1.",
+            "scope": "task_type",
+            "scope_key": "compound",
+            "retrieved_count": 1,
+            "helped_count": 1,
+            "hurt_count": 0,
+            "provenance": [
+              "train:combo:shipped:2023"
+            ],
+            "created_step": 17,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.5
+          },
+          {
+            "id": "L0006",
+            "content": "The 'status' column in the 'orders' table uses a non-standard mapping where 'shipped' is not represented by the integer 1.",
+            "scope": "task_type",
+            "scope_key": "status_count",
+            "retrieved_count": 0,
+            "helped_count": 0,
+            "hurt_count": 0,
+            "provenance": [
+              "train:status_count:shipped"
+            ],
+            "created_step": 24,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.0
+          }
+        ]
+      },
+      "stats": {
+        "generate_calls": 831,
+        "embed_calls": 409,
+        "live_calls": 0,
+        "tokens_in": 336974,
+        "tokens_out": 38340,
+        "tokens_embed": 0,
+        "cost_usd": 0.049033
+      }
+    },
+    {
+      "condition": "engram",
+      "seed": 2,
+      "checkpoints": [
+        {
+          "step": 0,
+          "success_rate": 0.4090909090909091,
+          "n_eval": 22,
+          "memory_size": 0,
+          "raw_lessons_seen": 0
+        },
+        {
+          "step": 6,
+          "success_rate": 0.4090909090909091,
+          "n_eval": 22,
+          "memory_size": 1,
+          "raw_lessons_seen": 1
+        },
+        {
+          "step": 12,
+          "success_rate": 0.7272727272727273,
+          "n_eval": 22,
+          "memory_size": 5,
+          "raw_lessons_seen": 5
+        },
+        {
+          "step": 18,
+          "success_rate": 0.7272727272727273,
+          "n_eval": 22,
+          "memory_size": 5,
+          "raw_lessons_seen": 6
+        },
+        {
+          "step": 24,
+          "success_rate": 0.7272727272727273,
+          "n_eval": 22,
+          "memory_size": 5,
+          "raw_lessons_seen": 7
+        },
+        {
+          "step": 30,
+          "success_rate": 0.7272727272727273,
+          "n_eval": 22,
+          "memory_size": 6,
+          "raw_lessons_seen": 10
+        }
+      ],
+      "final_snapshot": {
+        "step": 30,
+        "count": 6,
+        "by_scope": {
+          "task_type": 4,
+          "global": 2
+        },
+        "by_source": {
+          "reflection": 6
+        },
+        "lessons": [
+          {
+            "id": "L0001",
+            "content": "The 'status' column in the 'orders' table uses a non-zero integer to represent 'pending' status, rather than 0.",
+            "scope": "task_type",
+            "scope_key": "status_revenue",
+            "retrieved_count": 3,
+            "helped_count": 0,
+            "hurt_count": 3,
+            "provenance": [
+              "train:status_revenue:pending",
+              "train:status_revenue:shipped"
+            ],
+            "created_step": 4,
+            "version": 4,
+            "source": "reflection",
+            "utility": -0.75
+          },
+          {
+            "id": "L0002",
+            "content": "The 'status' column in the 'orders' table uses non-zero integer values to represent 'pending' states, rather than 0.",
+            "scope": "task_type",
+            "scope_key": "status_count",
+            "retrieved_count": 1,
+            "helped_count": 0,
+            "hurt_count": 1,
+            "provenance": [
+              "train:status_count:pending",
+              "train:status_count:shipped"
+            ],
+            "created_step": 7,
+            "version": 2,
+            "source": "reflection",
+            "utility": -0.5
+          },
+          {
+            "id": "L0003",
+            "content": "The 'list_price_usd' column in the 'products' table stores prices in cents, not dollars, requiring division by 100 for currency comparisons.",
+            "scope": "global",
+            "scope_key": "",
+            "retrieved_count": 14,
+            "helped_count": 10,
+            "hurt_count": 4,
+            "provenance": [
+              "train:expensive:150"
+            ],
+            "created_step": 8,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.4
+          },
+          {
+            "id": "L0004",
+            "content": "The 'orders' table contains a 'is_deleted' column that must be filtered (e.g., 'is_deleted = 0') to retrieve valid, non-deleted orders.",
+            "scope": "global",
+            "scope_key": "",
+            "retrieved_count": 17,
+            "helped_count": 11,
+            "hurt_count": 6,
+            "provenance": [
+              "train:combo:shipped:2023"
+            ],
+            "created_step": 9,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.2778
+          },
+          {
+            "id": "L0005",
+            "content": "The 'status' column in the 'orders' table uses a non-standard integer mapping where 'shipped' is not represented by the value 1.",
+            "scope": "task_type",
+            "scope_key": "compound",
+            "retrieved_count": 1,
+            "helped_count": 1,
+            "hurt_count": 0,
+            "provenance": [
+              "train:combo:shipped:2023"
+            ],
+            "created_step": 11,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.5
+          },
+          {
+            "id": "L0006",
+            "content": "The 'status' column in the 'orders' table uses a non-standard integer mapping where 'shipped' is not represented by the value 1.",
+            "scope": "task_type",
+            "scope_key": "status_revenue",
+            "retrieved_count": 0,
+            "helped_count": 0,
+            "hurt_count": 0,
+            "provenance": [
+              "train:status_revenue:shipped"
+            ],
+            "created_step": 30,
+            "version": 1,
+            "source": "reflection",
+            "utility": 0.0
+          }
+        ]
+      },
+      "stats": {
+        "generate_calls": 1003,
+        "embed_calls": 531,
+        "live_calls": 0,
+        "tokens_in": 410272,
+        "tokens_out": 46721,
+        "tokens_embed": 0,
+        "cost_usd": 0.059716
+      }
+    }
+  ]
+}

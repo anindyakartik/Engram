@@ -1,0 +1,65 @@
+{
+  "_key": {
+    "contents": "Schema:\nCREATE TABLE customers (\n    id         INTEGER PRIMARY KEY,\n    name       TEXT NOT NULL,\n    country    TEXT NOT NULL,\n    signup_ts  INTEGER NOT NULL\n);\n\nCREATE TABLE products (\n    id             INTEGER PRIMARY KEY,\n    name           TEXT NOT NULL,\n    list_price_usd INTEGER NOT NULL\n);\n\nCREATE TABLE categories (\n    id   INTEGER PRIMARY KEY,\n    name TEXT NOT NULL\n);\n\nCREATE TABLE product_categories (\n    product_id  INTEGER NOT NULL,\n    category_id INTEGER NOT NULL\n);\n\nCREATE TABLE orders (\n    id          INTEGER PRIMARY KEY,\n    customer_id INTEGER NOT NULL,\n    status      INTEGER NOT NULL,\n    price_usd   INTEGER NOT NULL,\n    placed_ts   INTEGER NOT NULL,\n    is_deleted  INTEGER NOT NULL\n);\n\nCREATE TABLE order_items (\n    order_id   INTEGER NOT NULL,\n    product_id INTEGER NOT NULL,\n    qty        INTEGER NOT NULL\n);\n\n\nQuestion: What is the total revenue in dollars from shipped orders? Round to 2 decimals.\nThe analyst's SQL answer was:\nSELECT ROUND(SUM(price_usd) / 100.0, 2) FROM orders WHERE status = 'shipped' AND is_deleted = 0;\n\nThe verifier judged this answer INCORRECT (verifier: result-set mismatch or invalid SQL).\n\nWhat general, reusable lesson(s) about this database's hidden conventions should be remembered for future questions?",
+    "force_tool": true,
+    "kind": "generate",
+    "model": "gemini-flash-lite-latest",
+    "seed": 7,
+    "system": "You are an expert data analyst reviewing one attempt to answer a question with SQL against a SQLite database whose conventions are UNDOCUMENTED. Extract concise, reusable lessons about the database's hidden conventions that will help on FUTURE, different questions \u2014 e.g. how a column is really encoded, a filter that must always be applied, a unit or date representation, or a join that is required. Focus on general rules, NOT facts specific to this question's numbers. If the attempt FAILED, hypothesise the single most likely convention that was violated.\nRules for good lessons:\n- Each lesson must assert ONE specific, concrete convention. Do NOT hedge with 'or' / list alternatives \u2014 commit to the single most likely cause.\n- State only what the tables and columns in THIS attempt justify. Do NOT speculate that OTHER tables or columns (not involved here) share a property.\n- Prefer one sharp lesson over several vague ones; 0 lessons is fine.\nRecord 0 to 3 lessons via record_lessons. Mark a lesson 'global' if it is true of the whole database, or 'task_type' if it only applies to this kind of question.",
+    "temperature": 0.0,
+    "tools": [
+      {
+        "description": "Record the reusable lessons learned from this attempt (0 to 3).",
+        "name": "record_lessons",
+        "parameters": {
+          "properties": {
+            "lessons": {
+              "description": "The lessons; may be empty if nothing generalisable was learned.",
+              "items": {
+                "properties": {
+                  "content": {
+                    "description": "One actionable, general insight about the database.",
+                    "type": "string"
+                  },
+                  "scope": {
+                    "description": "'global' (whole database) or 'task_type' (this kind of question only).",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "content",
+                  "scope"
+                ],
+                "type": "object"
+              },
+              "type": "array"
+            }
+          },
+          "required": [
+            "lessons"
+          ],
+          "type": "object"
+        }
+      }
+    ]
+  },
+  "text": "",
+  "tool_calls": [
+    {
+      "args": {
+        "lessons": [
+          {
+            "content": "The 'status' column in the 'orders' table uses integer codes rather than string literals (e.g., 'shipped'), requiring a numeric filter instead of a string comparison.",
+            "scope": "global"
+          }
+        ]
+      },
+      "name": "record_lessons"
+    }
+  ],
+  "usage": {
+    "input": 717,
+    "output": 61,
+    "total": 778
+  }
+}
