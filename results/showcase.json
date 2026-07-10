@@ -1,0 +1,52 @@
+{
+  "n_eval": 22,
+  "base_pass": 9,
+  "engram_pass": 20,
+  "n_flips": 12,
+  "examples": [
+    {
+      "task_type": "expensive_products",
+      "question": "How many products have a list price above $100?",
+      "base_sql": "SELECT count(*) FROM products WHERE list_price_usd > 100;",
+      "engram_sql": "SELECT count(*) FROM products WHERE list_price_usd > 10000;",
+      "lessons": [
+        "The 'list_price_usd' column in the 'products' table stores prices in cents, not dollars, requiring division by 100 for currency comparisons.",
+        "The 'orders' table contains an 'is_deleted' column, which must be filtered (e.g., 'is_deleted = 0') to exclude inactive or cancelled orders from aggregate counts.",
+        "The 'status' column in the 'orders' table uses integer codes rather than string literals (e.g., 'shipped'), requiring a numeric filter instead of a string comparison."
+      ]
+    },
+    {
+      "task_type": "status_count",
+      "question": "How many orders are paid?",
+      "base_sql": "SELECT count(*) FROM orders WHERE status = 1;",
+      "engram_sql": "SELECT count(*) FROM orders WHERE is_deleted = 0 AND status = 1;",
+      "lessons": [
+        "The 'orders' table contains an 'is_deleted' column, which must be filtered (e.g., 'is_deleted = 0') to exclude inactive or cancelled orders from aggregate counts.",
+        "The 'status' column in the 'orders' table uses a non-standard mapping where 'shipped' is not represented by the integer 1.",
+        "The 'status' column in the 'orders' table uses integer codes rather than string literals (e.g., 'shipped'), requiring a numeric filter instead of a string comparison."
+      ]
+    },
+    {
+      "task_type": "status_revenue",
+      "question": "What is the total revenue in dollars from delivered orders? Round to 2 decimals.",
+      "base_sql": "SELECT ROUND(SUM(price_usd), 2) FROM orders WHERE status = 'delivered' AND is_deleted = 0;",
+      "engram_sql": "SELECT ROUND(SUM(price_usd) / 100.0, 2) FROM orders WHERE is_deleted = 0 AND status = 3;",
+      "lessons": [
+        "The 'orders' table contains an 'is_deleted' column, which must be filtered (e.g., 'is_deleted = 0') to exclude inactive or cancelled orders from aggregate counts.",
+        "The 'list_price_usd' column in the 'products' table stores prices in cents, not dollars, requiring division by 100 for currency comparisons.",
+        "The 'status' column in the 'orders' table uses a non-standard integer mapping where 'shipped' is not represented by the value 1.",
+        "The 'status' column in the 'orders' table uses integer codes rather than string literals (e.g., 'shipped'), requiring a numeric filter instead of a string comparison."
+      ]
+    },
+    {
+      "task_type": "year_count",
+      "question": "How many orders were placed in 2022?",
+      "base_sql": "SELECT count(*) FROM orders WHERE placed_ts >= 1640995200 AND placed_ts < 1672531200;",
+      "engram_sql": "SELECT count(*) FROM orders WHERE is_deleted = 0 AND placed_ts >= 1640995200 AND placed_ts < 1672531200;",
+      "lessons": [
+        "The 'orders' table contains an 'is_deleted' column, which must be filtered (e.g., 'is_deleted = 0') to exclude inactive or cancelled orders from aggregate counts.",
+        "The 'status' column in the 'orders' table uses integer codes rather than string literals (e.g., 'shipped'), requiring a numeric filter instead of a string comparison."
+      ]
+    }
+  ]
+}
