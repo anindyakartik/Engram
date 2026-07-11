@@ -20,77 +20,141 @@ import streamlit as st
 import config
 
 RESULTS = config.ROOT / "results"
-MUTED = "#64748b"
-COLORS = {"no_memory": "#94a3b8", "naive": "#f59e0b", "engram": "#2563eb"}
-LABELS = {"no_memory": "No memory", "naive": "Naive accumulation", "engram": "Engram (curated)"}
 
-st.set_page_config(page_title="Engram", layout="wide")
+# Palette: validated with the categorical checker (lightness band, chroma floor,
+# CVD separation, contrast) for the two hued series. The control series is a true
+# neutral, kept out of the hue rotation on purpose and carried by a dashed line
+# plus a direct label, not by color alone.
+PAPER = "#f7f3ea"
+INK = "#1c1a17"
+INK_SOFT = "#5b5548"
+HAIR = "#ddd2b6"
+BLUE = "#2a5aad"   # engram
+RUST = "#c05a2a"   # naive
+GRAY = "#948c78"   # no memory (control, dashed)
+GOOD = "#1c6b3f"
+BAD = "#b3261e"
 
-CSS = """
+COLORS = {"no_memory": GRAY, "naive": RUST, "engram": BLUE}
+
+st.set_page_config(page_title="Engram", page_icon=None, layout="wide")
+
+CSS = f"""
 <style>
-#MainMenu, header, footer {visibility: hidden;}
-html, body, [class*="css"] {font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;}
-.block-container {max-width: 1080px; padding-top: 2rem; padding-bottom: 5rem;}
-:root {--ink:#0f172a; --muted:#64748b; --line:#e6eaf0; --blue:#2563eb; --green:#16a34a; --red:#dc2626;}
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,440;9..144,560;9..144,680&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 
-.hero {background: linear-gradient(135deg,#f8faff 0%,#eef4ff 100%);
-  border:1px solid #e3ebfb; border-radius:22px; padding:34px 34px 30px 34px; margin-bottom:8px;}
-.eyebrow {font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; color:var(--blue); font-weight:700;}
-.title {font-size:3.4rem; line-height:1.0; margin:.35rem 0 .5rem 0; letter-spacing:-.03em; font-weight:800; color:var(--ink);}
-.lede {font-size:1.14rem; color:#334155; max-width:730px; line-height:1.55;}
-.bigstat {display:flex; align-items:baseline; gap:14px; margin-top:22px; flex-wrap:wrap;}
-.bigstat .from {font-size:1.5rem; font-weight:700; color:var(--muted);}
-.bigstat .arrow {color:#94a3b8; font-size:1.3rem;}
-.bigstat .to {font-size:3.2rem; font-weight:850; color:var(--blue); letter-spacing:-.03em; line-height:1;}
-.bigstat .cap {font-size:.95rem; color:#475569; margin-left:6px;}
-.badges {margin-top:14px; display:flex; gap:8px; flex-wrap:wrap;}
-.badge {font-size:.74rem; font-weight:600; color:#334155; background:#fff; border:1px solid var(--line);
-  border-radius:999px; padding:4px 11px;}
+:root {{
+  --paper: {PAPER}; --ink: {INK}; --ink-soft: {INK_SOFT}; --hair: {HAIR};
+  --blue: {BLUE}; --rust: {RUST}; --gray: {GRAY}; --good: {GOOD}; --bad: {BAD};
+  --serif: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --body: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}}
 
-.section {font-size:.75rem; letter-spacing:.15em; text-transform:uppercase; color:var(--muted);
-  font-weight:700; margin:2.8rem 0 .3rem 0;}
-.sub {font-size:.96rem; color:#475569; line-height:1.6; max-width:800px; margin-bottom:.6rem;}
+#MainMenu, header, footer {{visibility: hidden;}}
+html, body, .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {{
+  background: var(--paper) !important;
+}}
+.block-container {{max-width: 940px; padding-top: 3rem; padding-bottom: 6rem;}}
+* {{ box-sizing: border-box; }}
 
-.tiles {display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:1.2rem 0 .3rem 0;}
-.tile {border:1px solid var(--line); border-radius:16px; padding:18px 20px; background:#fff;
-  box-shadow:0 1px 2px rgba(15,23,42,.04);}
-.tile .k {font-size:.74rem; color:var(--muted); font-weight:600;}
-.tile .v {font-size:2.3rem; font-weight:800; color:var(--ink); letter-spacing:-.02em;}
-.tile .s {font-size:.8rem; color:var(--muted);}
-.tile.accent {background:var(--blue); border-color:var(--blue);}
-.tile.accent .k,.tile.accent .s {color:#dbeafe;} .tile.accent .v {color:#fff;}
+/* ---- masthead ---- */
+.spine {{display:flex; align-items:center; gap:10px; margin-bottom:.6rem;}}
+.spine .bar {{width:22px; height:3px; background:var(--blue);}}
+.eyebrow {{font-family:var(--mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-soft);}}
+.wordmark {{font-family:var(--serif); font-optical-sizing:auto; font-weight:680; font-size:4.6rem;
+  line-height:.92; letter-spacing:-.01em; color:var(--ink); margin:.1rem 0 .9rem 0;}}
+.lede {{font-family:var(--body); font-size:1.22rem; line-height:1.62; color:#2c2924; max-width:680px;}}
+.rule {{border:none; border-top:1px solid var(--hair); margin:1.9rem 0;}}
+.rule.thick {{border-top:2px solid var(--ink); margin-bottom:2px;}}
 
-.demo {border:1px solid var(--line); border-radius:16px; background:#fff; padding:18px 20px; margin-bottom:14px;
-  box-shadow:0 1px 2px rgba(15,23,42,.04);}
-.demo .q {font-weight:700; color:var(--ink); font-size:1.02rem;}
-.demo .tag {display:inline-block; font-size:.68rem; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
-  color:#3730a3; background:#eef2ff; border-radius:6px; padding:2px 8px; margin-bottom:8px;}
-.ba {display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:12px;}
-@media (max-width:760px){.ba{grid-template-columns:1fr;} .tiles{grid-template-columns:1fr;}}
-.side .lab {font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.06em; margin-bottom:5px;}
-.side.bad .lab {color:var(--red);} .side.good .lab {color:var(--green);}
-.sql {font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.82rem; line-height:1.5;
-  padding:11px 13px; border-radius:10px; white-space:pre-wrap; word-break:break-word;}
-.side.bad .sql {background:#fef2f2; border:1px solid #fecaca; color:#7f1d1d;}
-.side.good .sql {background:#f0fdf4; border:1px solid #bbf7d0; color:#14532d;}
-.learned {margin-top:12px; font-size:.9rem; color:#1e293b; background:#f8fafc; border-left:3px solid var(--blue);
-  border-radius:0 8px 8px 0; padding:9px 13px;}
-.learned b {color:var(--blue);}
+/* ---- headline stat ---- */
+.statline {{display:flex; align-items:baseline; gap:20px; flex-wrap:wrap; margin: 1.6rem 0 .3rem 0;}}
+.statline .n {{font-family:var(--serif); font-weight:600; font-size:4.4rem; line-height:1;
+  letter-spacing:-.02em; font-variant-numeric: oldstyle-nums;}}
+.statline .from {{color:var(--ink-soft);}}
+.statline .to {{color:var(--blue);}}
+.statline .arrow {{font-family:var(--body); font-size:1.7rem; color:var(--hair); font-weight:400;}}
+.statcap {{font-family:var(--mono); font-size:.82rem; color:var(--ink-soft); letter-spacing:.02em;
+  margin-top:.2rem;}}
+.statcap b {{color:var(--ink);}}
 
-.steps {display:grid; grid-template-columns:repeat(4,1fr); gap:12px;}
-@media (max-width:760px){.steps{grid-template-columns:1fr 1fr;}}
-.step {border:1px solid var(--line); border-radius:14px; padding:15px 16px; background:#fff; height:100%;}
-.step .n {font-size:.72rem; font-weight:800; color:var(--blue);}
-.step .t {font-weight:700; color:var(--ink); margin:3px 0 5px 0;}
-.step .d {font-size:.85rem; color:#475569; line-height:1.45;}
+.badgerow {{display:flex; gap:22px; flex-wrap:wrap; margin:1.5rem 0 .4rem 0;}}
+.badgerow span {{font-family:var(--mono); font-size:.74rem; color:var(--ink-soft);}}
+.badgerow span::before {{content:"\\2013\\2002"; color:var(--blue);}}
 
-.lesson {border:1px solid var(--line); border-radius:12px; padding:13px 15px; margin-bottom:10px; background:#fff;}
-.lesson .txt {color:var(--ink); font-size:.95rem; line-height:1.45;}
-.lesson .meta {font-size:.78rem; color:var(--muted); margin-top:7px; display:flex; gap:16px; flex-wrap:wrap;}
-.chip {display:inline-block; font-size:.72rem; font-weight:600; color:#334155; background:#f1f5f9;
-  border-radius:999px; padding:1px 9px;}
-.bar {height:6px; border-radius:999px; background:#eef2f7; margin-top:9px; overflow:hidden;}
-.bar > span {display:block; height:100%; background:linear-gradient(90deg,#60a5fa,#2563eb);}
+/* ---- three-figure row ---- */
+.figrow {{display:flex; margin:2.2rem 0 0 0; border-top:1px solid var(--hair);}}
+.fig {{flex:1; padding:16px 22px 4px 0; border-left:1px solid var(--hair);}}
+.fig:first-child {{border-left:none; padding-left:0;}}
+.fig .k {{font-family:var(--mono); font-size:.72rem; letter-spacing:.06em; text-transform:uppercase;
+  color:var(--ink-soft);}}
+.fig .v {{font-family:var(--serif); font-weight:600; font-size:2.5rem; letter-spacing:-.01em;
+  font-variant-numeric: oldstyle-nums; margin:.15rem 0;}}
+.fig.accent .v {{color:var(--blue);}}
+.fig .s {{font-family:var(--body); font-size:.92rem; color:var(--ink-soft); font-style:italic;}}
+
+/* ---- section headers ---- */
+.section {{display:flex; align-items:baseline; gap:10px; margin:3.4rem 0 .3rem 0;}}
+.section .idx {{font-family:var(--mono); font-size:.78rem; color:var(--blue);}}
+.section .ttl {{font-family:var(--serif); font-weight:600; font-size:1.5rem; color:var(--ink);
+  letter-spacing:-.01em;}}
+.section-rule {{border:none; border-top:1px solid var(--hair); margin:.35rem 0 1.1rem 0;}}
+.sub {{font-family:var(--body); font-size:1.02rem; color:#3a362f; line-height:1.62; max-width:760px;
+  margin-bottom:1.1rem;}}
+.sub b {{color:var(--ink);}}
+
+/* ---- watch it learn: figure cards ---- */
+.demo {{padding:20px 0 22px 0; border-top:1px solid var(--hair);}}
+.demo .figtag {{font-family:var(--mono); font-size:.74rem; letter-spacing:.05em; color:var(--ink-soft);
+  text-transform:uppercase; margin-bottom:.5rem;}}
+.demo .figtag b {{color:var(--blue);}}
+.demo .q {{font-family:var(--body); font-style:italic; font-size:1.14rem; color:var(--ink); line-height:1.5;
+  margin-bottom:1rem;}}
+.ba {{display:grid; grid-template-columns:1fr 1fr; gap:20px;}}
+@media (max-width:760px){{.ba{{grid-template-columns:1fr;}} .figrow{{flex-direction:column;}}
+  .fig{{border-left:none; border-top:1px solid var(--hair); padding:14px 0;}} .fig:first-child{{border-top:none;}}}}
+.side {{border-left:3px solid var(--bad); padding-left:14px;}}
+.side.good {{border-left-color:var(--good);}}
+.side .lab {{font-family:var(--mono); font-size:.72rem; font-weight:600; letter-spacing:.04em;
+  text-transform:uppercase; color:var(--bad); margin-bottom:6px;}}
+.side.good .lab {{color:var(--good);}}
+.sql {{font-family:var(--mono); font-size:.83rem; line-height:1.55; color:var(--ink); white-space:pre-wrap;
+  word-break:break-word;}}
+.learned {{margin-top:14px; padding-left:14px; border-left:3px solid var(--blue); font-family:var(--body);
+  font-style:italic; font-size:.96rem; color:#2c2924; line-height:1.5;}}
+.learned b {{font-style:normal; font-family:var(--mono); font-size:.72rem; text-transform:uppercase;
+  letter-spacing:.04em; color:var(--blue); display:block; margin-bottom:4px;}}
+
+/* ---- chart color key ---- */
+.key {{display:flex; gap:22px; flex-wrap:wrap; margin-bottom:.7rem;}}
+.key span {{font-family:var(--mono); font-size:.78rem; color:var(--ink-soft); display:flex; align-items:center; gap:7px;}}
+.key .sw {{width:16px; height:2px; display:inline-block;}}
+.key .sw.dash {{background: repeating-linear-gradient(90deg, var(--gray) 0 5px, transparent 5px 8px);}}
+
+/* ---- loop, numbered like footnotes ---- */
+.steps {{display:grid; grid-template-columns:repeat(4,1fr); gap:26px; margin-top:.6rem;}}
+@media (max-width:760px){{.steps{{grid-template-columns:1fr 1fr;}}}}
+.step {{border-top:2px solid var(--ink); padding-top:12px;}}
+.step .n {{font-family:var(--serif); font-weight:600; font-size:1.5rem; color:var(--blue);
+  font-variant-numeric: oldstyle-nums;}}
+.step .t {{font-family:var(--serif); font-weight:600; color:var(--ink); font-size:1.08rem; margin:2px 0 6px 0;}}
+.step .d {{font-family:var(--body); font-size:.92rem; color:#3a362f; line-height:1.5;}}
+
+/* ---- lessons, as a glossary ---- */
+.lesson {{padding:16px 0; border-top:1px solid var(--hair);}}
+.lesson .txt {{font-family:var(--body); color:var(--ink); font-size:1.02rem; line-height:1.5;}}
+.lesson .meta {{font-family:var(--mono); font-size:.74rem; color:var(--ink-soft); margin-top:8px;
+  display:flex; gap:16px; flex-wrap:wrap; align-items:center;}}
+.ubar {{width:90px; height:4px; background:var(--hair); position:relative; display:inline-block;}}
+.ubar > span {{position:absolute; left:0; top:0; height:100%; background:var(--blue);}}
+
+/* ---- reproduce, terminal ---- */
+.term {{background:var(--ink); color:#f4efe2; font-family:var(--mono); font-size:.88rem;
+  padding:16px 18px; border-radius:3px; line-height:1.6;}}
+.term .p {{color:var(--rust);}}
+.colophon {{font-family:var(--mono); font-size:.76rem; color:var(--ink-soft); margin-top:1.6rem;}}
 </style>
 """
 st.markdown(CSS, unsafe_allow_html=True)
@@ -123,38 +187,46 @@ def utility(row: dict) -> float:
     return (hp - ht) / (hp + ht + config.UTILITY_PRIOR)
 
 
-# ---------- hero ----------
+def section(idx: str, title: str) -> None:
+    st.markdown(
+        f'<div class="section"><span class="idx">{idx}</span><span class="ttl">{title}</span></div>'
+        '<hr class="section-rule" />',
+        unsafe_allow_html=True,
+    )
+
+
+# ---------- masthead ----------
 st.markdown(
-    f"""
-<div class="hero">
-  <div class="eyebrow">Memory-augmented agent &middot; no fine-tuning</div>
-  <div class="title">Engram</div>
-  <div class="lede">An agent that gets better at a task by writing and curating its own memory of what
-  worked. It tries a task, a deterministic checker (not an LLM) grades it, it reflects into a short
-  lesson, and later tries retrieve those lessons. Everything is measured on a held-out set it never
-  learns from.</div>
-  <div class="bigstat">
-    <span class="from">{h.get('baseline_pct')}%</span>
-    <span class="arrow">&rarr;</span>
-    <span class="to">{h.get('engram_pct')}%</span>
-    <span class="cap">held-out success, +{h.get('improvement_pts')} points, no weight updates</span>
-  </div>
-  <div class="badges">
-    <span class="badge">deterministic checker, no LLM judge</span>
-    <span class="badge">held-out generalization</span>
-    <span class="badge">reproduces offline, no API key</span>
-  </div>
-</div>
+    """
+<div class="spine"><span class="bar"></span><span class="eyebrow">memory-augmented agent &middot; no fine-tuning</span></div>
+<div class="wordmark">Engram</div>
+<div class="lede">An agent that gets better at a task by writing and curating its own memory of what
+worked. It tries a task, a deterministic checker (not an LLM) grades it, it reflects into a short
+lesson, and later tries retrieve those lessons. Everything below is measured on a held-out set it
+never learns from.</div>
+<hr class="rule thick" />
 """,
     unsafe_allow_html=True,
 )
 
+# ---------- headline stat ----------
 st.markdown(
     f"""
-<div class="tiles">
-  <div class="tile"><div class="k">No memory (control)</div><div class="v">{h.get('baseline_pct')}%</div><div class="s">base model, held-out</div></div>
-  <div class="tile accent"><div class="k">Engram (curated)</div><div class="v">{h.get('engram_pct')}%</div><div class="s">+{h.get('improvement_pts')} points</div></div>
-  <div class="tile"><div class="k">Naive accumulation</div><div class="v">{h.get('naive_pct')}%</div><div class="s">keep every lesson</div></div>
+<div class="statline">
+  <span class="n from">{h.get('baseline_pct')}<small style="font-size:.5em;">%</small></span>
+  <span class="arrow">&#10230;</span>
+  <span class="n to">{h.get('engram_pct')}<small style="font-size:.5em;">%</small></span>
+</div>
+<div class="statcap">held-out success rate &middot; <b>+{h.get('improvement_pts')} points</b> &middot; zero weight updates</div>
+<div class="badgerow">
+  <span>deterministic checker, no LLM judge</span>
+  <span>held-out generalization</span>
+  <span>reproduces offline, no API key</span>
+</div>
+<div class="figrow">
+  <div class="fig"><div class="k">No memory</div><div class="v">{h.get('baseline_pct')}%</div><div class="s">base model, held-out</div></div>
+  <div class="fig accent"><div class="k">Engram, curated</div><div class="v">{h.get('engram_pct')}%</div><div class="s">+{h.get('improvement_pts')} points</div></div>
+  <div class="fig"><div class="k">Naive accumulation</div><div class="v">{h.get('naive_pct')}%</div><div class="s">keeps every lesson</div></div>
 </div>
 """,
     unsafe_allow_html=True,
@@ -162,55 +234,93 @@ st.markdown(
 
 # ---------- watch it learn ----------
 if show and show.get("examples"):
-    st.markdown('<div class="section">Watch it learn</div>', unsafe_allow_html=True)
+    section("01", "Watch it learn")
     st.markdown(
         f'<div class="sub">Held-out questions the base model got wrong, and the same questions after the '
         f"agent taught itself the database's hidden rules. On this run it went from solving "
         f"<b>{show['base_pass']} of {show['n_eval']}</b> held-out tasks to <b>{show['engram_pass']} of "
-        f"{show['n_eval']}</b>; {show['n_flips']} flipped from wrong to right. The SQL below is the agent's "
-        "actual output.</div>",
+        f"{show['n_eval']}</b> &mdash; {show['n_flips']} flipped from wrong to right. The SQL below is the "
+        "agent's actual output, unedited.</div>",
         unsafe_allow_html=True,
     )
-    for ex in show["examples"]:
+    for i, ex in enumerate(show["examples"], start=1):
         lesson = ex["lessons"][0] if ex["lessons"] else "a rule learned from an earlier failure"
+        pretty_type = ex["task_type"].replace("_", " ")
         st.markdown(
             f"""
 <div class="demo">
-  <div class="tag">{escape(ex['task_type'])}</div>
-  <div class="q">{escape(ex['question'])}</div>
+  <div class="figtag">fig. {i:02d} &middot; <b>{escape(pretty_type)}</b></div>
+  <div class="q">&ldquo;{escape(ex['question'])}&rdquo;</div>
   <div class="ba">
-    <div class="side bad"><div class="lab">Base model &middot; wrong</div><div class="sql">{escape(ex['base_sql'])}</div></div>
-    <div class="side good"><div class="lab">Engram &middot; correct</div><div class="sql">{escape(ex['engram_sql'])}</div></div>
+    <div class="side">
+      <div class="lab">base model &middot; wrong</div>
+      <div class="sql">{escape(ex['base_sql'])}</div>
+    </div>
+    <div class="side good">
+      <div class="lab">engram &middot; correct</div>
+      <div class="sql">{escape(ex['engram_sql'])}</div>
+    </div>
   </div>
-  <div class="learned"><b>Lesson it wrote:</b> {escape(lesson)}</div>
+  <div class="learned"><b>lesson it wrote</b>{escape(lesson)}</div>
 </div>
 """,
             unsafe_allow_html=True,
         )
 
 # ---------- curve ----------
-st.markdown('<div class="section">Held-out improvement</div>', unsafe_allow_html=True)
+section("02", "Held-out improvement")
+st.markdown(
+    f'<div class="key">'
+    f'<span><span class="sw dash"></span>no memory</span>'
+    f'<span><span class="sw" style="background:{RUST}"></span>naive accumulation</span>'
+    f'<span><span class="sw" style="background:{BLUE}"></span>engram, curated</span>'
+    f"</div>",
+    unsafe_allow_html=True,
+)
 rows = []
 for cond in ("no_memory", "naive", "engram"):
     if cond in agg:
         for step, m in zip(agg[cond]["steps"], agg[cond]["mean"], strict=True):
-            rows.append({"tasks seen": step, "condition": LABELS[cond], "success": round(100 * m, 1)})
+            rows.append({"tasks seen": step, "condition": cond, "success": round(100 * m, 1)})
 curve = pd.DataFrame(rows)
-order = [LABELS[c] for c in ("no_memory", "naive", "engram") if c in agg]
-crange = [COLORS[c] for c in ("no_memory", "naive", "engram") if c in agg]
-scale = alt.Scale(domain=order, range=crange)
-enc_x = alt.X("tasks seen:Q", title="training tasks seen", axis=alt.Axis(grid=False, tickCount=6))
-enc_y = alt.Y("success:Q", title="held-out success (%)", scale=alt.Scale(domain=[0, 100]))
-color = alt.Color("condition:N", scale=scale, legend=alt.Legend(orient="top", title=None))
-line = alt.Chart(curve).mark_line(point=alt.OverlayMarkDef(size=60, filled=True), strokeWidth=3).encode(
-    x=enc_x, y=enc_y, color=color, tooltip=["condition", "tasks seen", "success"]
-)
+
+base_axis_x = alt.X("tasks seen:Q", title="training tasks seen", axis=alt.Axis(grid=False, tickCount=6))
+base_axis_y = alt.Y("success:Q", title="held-out success (%)", scale=alt.Scale(domain=[0, 100]), axis=alt.Axis(grid=False))
+
+layers = []
+control = curve[curve["condition"] == "no_memory"]
+if not control.empty:
+    layers.append(
+        alt.Chart(control)
+        .mark_line(strokeDash=[4, 4], strokeWidth=2, color=GRAY)
+        .encode(x=base_axis_x, y=base_axis_y, tooltip=["condition", "tasks seen", "success"])
+    )
+hued = curve[curve["condition"] != "no_memory"]
+if not hued.empty:
+    hue_order = [c for c in ("naive", "engram") if c in agg]
+    hue_range = [COLORS[c] for c in hue_order]
+    layers.append(
+        alt.Chart(hued)
+        .mark_line(point=alt.OverlayMarkDef(size=55, filled=True), strokeWidth=3)
+        .encode(
+            x=base_axis_x,
+            y=base_axis_y,
+            color=alt.Color("condition:N", scale=alt.Scale(domain=hue_order, range=hue_range), legend=None),
+            tooltip=["condition", "tasks seen", "success"],
+        )
+    )
 last = curve.sort_values("tasks seen").groupby("condition", as_index=False).last()
-labels = alt.Chart(last).mark_text(align="left", dx=8, fontSize=12, fontWeight="bold").encode(
-    x="tasks seen:Q", y="success:Q", text=alt.Text("success:Q", format=".0f"), color=color
+last["hex"] = last["condition"].map(COLORS)
+labels = (
+    alt.Chart(last)
+    .mark_text(align="left", dx=8, fontSize=12, fontWeight="bold", font="IBM Plex Mono")
+    .encode(x="tasks seen:Q", y="success:Q", text=alt.Text("success:Q", format=".0f"), color=alt.Color("hex:N", scale=None, legend=None))
 )
-chart = (line + labels).properties(height=360).configure_view(strokeOpacity=0).configure_axis(
-    labelColor=MUTED, titleColor=MUTED, domainColor="#e2e8f0", tickColor="#e2e8f0", labelFontSize=12
+chart = (
+    alt.layer(*layers, labels)
+    .properties(height=340, background="transparent")
+    .configure_view(strokeOpacity=0)
+    .configure_axis(labelColor=INK_SOFT, titleColor=INK_SOFT, domainColor=HAIR, tickColor=HAIR, labelFont="IBM Plex Mono", labelFontSize=11, titleFont="IBM Plex Mono", titleFontSize=11)
 )
 st.altair_chart(chart, use_container_width=True)
 st.markdown(
@@ -221,12 +331,12 @@ st.markdown(
 )
 
 # ---------- loop ----------
-st.markdown('<div class="section">How the loop works</div>', unsafe_allow_html=True)
+section("03", "How the loop works")
 loop = [
-    ("01", "Attempt", "Retrieve relevant lessons, then write one SQL query from the schema alone."),
-    ("02", "Check", "A deterministic checker runs the query and compares result sets. Hard pass or fail."),
-    ("03", "Reflect", "On a failure, the model proposes a short lesson about a likely hidden rule."),
-    ("04", "Curate", "Dedup, score each lesson's utility from real outcomes, consolidate, prune."),
+    ("i", "Attempt", "Retrieve relevant lessons, then write one SQL query from the schema alone."),
+    ("ii", "Check", "A deterministic checker runs the query and compares result sets. Hard pass or fail."),
+    ("iii", "Reflect", "On a failure, the model proposes a short lesson about a likely hidden rule."),
+    ("iv", "Curate", "Dedup, score each lesson's utility from real outcomes, consolidate, prune."),
 ]
 st.markdown(
     '<div class="steps">'
@@ -240,24 +350,37 @@ st.markdown(
 
 # ---------- compaction ----------
 if "engram" in agg and "naive" in agg:
-    st.markdown('<div class="section">Curation keeps memory compact</div>', unsafe_allow_html=True)
+    section("04", "Curation keeps memory compact")
+    st.markdown(
+        f'<div class="key">'
+        f'<span><span class="sw" style="background:{HAIR}"></span>raw lessons proposed</span>'
+        f'<span><span class="sw" style="background:{RUST}"></span>naive memory</span>'
+        f'<span><span class="sw" style="background:{BLUE}"></span>engram memory</span>'
+        f"</div>",
+        unsafe_allow_html=True,
+    )
     comp = []
     for step, raw, mem in zip(
         agg["engram"]["steps"], agg["engram"]["raw_lessons_seen"], agg["engram"]["memory_size"], strict=True
     ):
-        comp.append({"tasks seen": step, "series": "Raw lessons proposed", "lessons": round(raw, 1)})
-        comp.append({"tasks seen": step, "series": "Engram memory", "lessons": round(mem, 1)})
+        comp.append({"tasks seen": step, "series": "raw", "lessons": round(raw, 1)})
+        comp.append({"tasks seen": step, "series": "engram", "lessons": round(mem, 1)})
     for step, mem in zip(agg["naive"]["steps"], agg["naive"]["memory_size"], strict=True):
-        comp.append({"tasks seen": step, "series": "Naive memory", "lessons": round(mem, 1)})
+        comp.append({"tasks seen": step, "series": "naive", "lessons": round(mem, 1)})
     cdf = pd.DataFrame(comp)
-    corder, ccolor = ["Raw lessons proposed", "Naive memory", "Engram memory"], ["#cbd5e1", "#f59e0b", "#2563eb"]
-    comp_chart = alt.Chart(cdf).mark_line(point=alt.OverlayMarkDef(size=50, filled=True), strokeWidth=3).encode(
-        x=alt.X("tasks seen:Q", title="training tasks seen", axis=alt.Axis(grid=False, tickCount=6)),
-        y=alt.Y("lessons:Q", title="lessons in memory"),
-        color=alt.Color("series:N", scale=alt.Scale(domain=corder, range=ccolor), legend=alt.Legend(orient="top", title=None)),
-        tooltip=["series", "tasks seen", "lessons"],
-    ).properties(height=300).configure_view(strokeOpacity=0).configure_axis(
-        labelColor=MUTED, titleColor=MUTED, domainColor="#e2e8f0", tickColor="#e2e8f0"
+    corder, ccolor = ["raw", "naive", "engram"], [HAIR, RUST, BLUE]
+    comp_chart = (
+        alt.Chart(cdf)
+        .mark_line(point=alt.OverlayMarkDef(size=45, filled=True), strokeWidth=2.5)
+        .encode(
+            x=alt.X("tasks seen:Q", title="training tasks seen", axis=alt.Axis(grid=False, tickCount=6)),
+            y=alt.Y("lessons:Q", title="lessons in memory", axis=alt.Axis(grid=False)),
+            color=alt.Color("series:N", scale=alt.Scale(domain=corder, range=ccolor), legend=None),
+            tooltip=["series", "tasks seen", "lessons"],
+        )
+        .properties(height=300, background="transparent")
+        .configure_view(strokeOpacity=0)
+        .configure_axis(labelColor=INK_SOFT, titleColor=INK_SOFT, domainColor=HAIR, tickColor=HAIR, labelFont="IBM Plex Mono", labelFontSize=11, titleFont="IBM Plex Mono", titleFontSize=11)
     )
     st.altair_chart(comp_chart, use_container_width=True)
     st.markdown(
@@ -268,7 +391,7 @@ if "engram" in agg and "naive" in agg:
     )
 
 # ---------- lessons ----------
-st.markdown('<div class="section">What the agent taught itself</div>', unsafe_allow_html=True)
+section("05", "What the agent taught itself")
 run = find_run("engram")
 if run is not None:
     snap = run["final_snapshot"]
@@ -284,19 +407,26 @@ if run is not None:
         st.markdown(
             f"""<div class="lesson">
   <div class="txt">{escape(les['content'])}</div>
-  <div class="bar"><span style="width:{width}%"></span></div>
-  <div class="meta"><span class="chip">{escape(scope)}</span><span>utility {u:+.2f}</span>
-  <span>retrieved {les['retrieved_count']} (helped {les['helped_count']}, hurt {les['hurt_count']})</span>
-  <span>{escape(les['source'])}</span></div>
+  <div class="meta">
+    <span class="ubar"><span style="width:{width}%"></span></span>
+    <span>utility {u:+.2f}</span>
+    <span>{escape(scope)}</span>
+    <span>retrieved {les['retrieved_count']} &middot; helped {les['helped_count']} &middot; hurt {les['hurt_count']}</span>
+    <span>{escape(les['source'])}</span>
+  </div>
 </div>""",
             unsafe_allow_html=True,
         )
 
 # ---------- reproduce ----------
-st.markdown('<div class="section">Reproduce</div>', unsafe_allow_html=True)
-st.code("ENGRAM_LLM_MODE=replay python scripts/run_experiment.py", language="bash")
+section("06", "Reproduce")
 st.markdown(
-    '<div class="sub">Every number and query on this page replays from committed recordings, so it '
-    "reproduces with no API key. Method and source are in the repository README.</div>",
+    '<div class="term"><span class="p">$</span> ENGRAM_LLM_MODE=replay python scripts/run_experiment.py</div>',
+    unsafe_allow_html=True,
+)
+st.markdown(
+    '<div class="sub" style="margin-top:1rem;">Every number and query on this page replays from committed '
+    "recordings, so it reproduces with no API key. Method and source are in the repository README.</div>"
+    '<div class="colophon">engram &middot; reproducible end to end, no fine-tuning</div>',
     unsafe_allow_html=True,
 )
