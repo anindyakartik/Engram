@@ -1,5 +1,7 @@
 # Engram
 
+Most LLM agents make the same mistake on task 100 that they made on task 1. Engram is an agent that actually gets better.
+
 An agent that gets better at a task over time by writing and curating its own memory,
 with no fine-tuning and no weight updates. It attempts a task, a deterministic checker
 (not an LLM) says pass or fail, the agent reflects on the attempt to extract a short
